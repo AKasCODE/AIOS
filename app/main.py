@@ -1,16 +1,8 @@
 from fastapi import FastAPI
-from pydantic import BaseModel
-from openai import OpenAI
-from dotenv import load_dotenv
-import os
-load_dotenv()
-print(os.getenv("OPENROUTER_API_KEY"))
-
+from app.models.chat import ChatRequest
+from app.services.llm_service import ask_llm
 
 app = FastAPI()
-
-class ChatRequest(BaseModel):
-    message:str
 
 @app.get("/")
 def home():
@@ -18,4 +10,5 @@ def home():
 
 @app.post("/chat")
 def chat(request:ChatRequest):
-    return {"reply":f"You said: {request.message}"}
+    reply = ask_llm(request.message)
+    return {"reply":reply}
