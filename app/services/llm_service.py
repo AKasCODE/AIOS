@@ -6,13 +6,13 @@ from app.core.logger import logger
 client = OpenAI(api_key=OPENROUTER_API_KEY, base_url=BASE_URL)
 
 
-def ask_llm(prompt: str):
+def ask_llm(messages: list):
     try:
         logger.info("Sending request to OpenRouter")
         response = client.chat.completions.create(
             model = MODEL_NAME,
-            messages=[{"role": "system","content": SYSTEM_PROMPT},
-                    {"role": "user", "content": prompt}],max_tokens=MAX_TOKENS
+            messages=messages,
+            max_tokens=MAX_TOKENS
                     )
         logger.info("Response received successfully")
         return {"success": True,
