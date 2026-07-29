@@ -8,5 +8,3 @@ def add_assistant_message(message : str) -> None:
 
 def get_recent_history():
     return get_recent_messages()
-
-# history = get_recent_history()
